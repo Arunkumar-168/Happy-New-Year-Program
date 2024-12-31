@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+import 'package:confetti/confetti.dart';
+
+void main() {
+  runApp(const HappyNewYearApp());
+}
+
+class HappyNewYearApp extends StatelessWidget {
+  const HappyNewYearApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HappyNewYearScreen(),
+    );
+  }
+}
+
+class HappyNewYearScreen extends StatefulWidget {
+  const HappyNewYearScreen({super.key});
+
+  @override
+  _HappyNewYearScreenState createState() => _HappyNewYearScreenState();
+}
+
+class _HappyNewYearScreenState extends State<HappyNewYearScreen> {
+  late ConfettiController _confettiController;
+
+  @override
+  void initState() {
+    super.initState();
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 10));
+    _confettiController.play();
+  }
+
+  @override
+  void dispose() {
+    _confettiController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.red,
+      body: Stack(
+        children: [
+          // Main Content
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Background Image
+                Positioned.fill(
+                  child: Container(
+                    height: 300,
+                    width: 390,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          'https://img.etimg.com/thumb/width-1200,height-900,imgsize-3429473,resizemode-75,msid-116818419/news/new-updates/happy-new-year-wishes-2025-best-new-year-eve-greetings-images-quotes-whatsapp-status-in-english-for-loved-ones-friends.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                const Text(
+                  'wish You Happy New Year',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Colors.purple,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_confettiController.state ==
+                        ConfettiControllerState.playing) {
+                      _confettiController.stop();
+                    } else {
+                      _confettiController.play();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple,
+                  ),
+                  child: const Text(
+                    'P.ArunKumar',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Confetti Animation
+          Align(
+            alignment: Alignment.topCenter,
+            child: ConfettiWidget(
+              confettiController: _confettiController,
+              blastDirection: 3.14 / 2, // Blast downwards
+              emissionFrequency: 0.05,
+              numberOfParticles: 20,
+              maxBlastForce: 20,
+              minBlastForce: 5,
+              gravity: 0.2,
+              colors: [
+                Colors.red,
+                Colors.orange,
+                Colors.yellow,
+                Colors.green,
+                Colors.blue,
+                Colors.purple,
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
